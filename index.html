@@ -862,4 +862,200 @@
                     <h5>Support</h5>
                     <a href="#">FAQ</a>
                     <a href="#">Shipping</a>
-                    <a href="#">
+                    <a href="#">Returns</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Connect</h5>
+                    <a href="https://t.me/PressonPrincessBot">Telegram</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">TikTok</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2026 Press-on Princess. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Demo Banner -->
+    <div class="demo-banner">Demo Mode — No Real Payments Will Be Processed</div>
+
+    <script>
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX - 10, y: e.clientY - 10, duration: 0.1 });
+            gsap.to(cursorDot, { x: e.clientX - 3, y: e.clientY - 3, duration: 0.05 });
+        });
+        
+        document.querySelectorAll('a, button, .gallery-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Loading Animation
+        const loader = document.getElementById('loader');
+        const loaderTl = gsap.timeline();
+        
+        loaderTl
+            .to('.loader-logo span', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.05,
+                ease: 'power3.out'
+            })
+            .to('.loader-bar', { opacity: 1, duration: 0.5 }, '-=0.4')
+            .to('.loader-progress', { width: '100%', duration: 2, ease: 'power2.inOut' }, '-=0.3')
+            .to('.loader-text', { opacity: 1, duration: 0.5 }, '-=1.5')
+            .to(loader, { opacity: 0, duration: 0.8, delay: 0.3 })
+            .set(loader, { display: 'none' })
+            .add(() => initPageAnimations());
+
+        function initPageAnimations() {
+            // Show navigation
+            gsap.to('nav', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+            document.getElementById('navbar').classList.add('visible');
+            
+            // Hero animations
+            const heroTl = gsap.timeline();
+            
+            heroTl
+                .to('.hero-label', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+                .add(() => {
+                    // Split title into characters
+                    const title = document.querySelector('.hero-title');
+                    const text = title.innerHTML;
+                    title.innerHTML = text.split('').map(char => 
+                        char === '<' ? '<' : char === '>' ? '>' : char === 'b' ? 'b' : char === 'r' ? 'r' : char === '/' ? '/' : 
+                        `<span class="char">${char}</span>`
+                    ).join('');
+                    
+                    gsap.to('.hero-title .char', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.2,
+                        stagger: 0.03,
+                        ease: 'power3.out'
+                    });
+                }, '-=0.5')
+                .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
+                .to('.hero-cta', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
+                .to('.scroll-indicator', { opacity: 1, duration: 1 }, '-=0.4');
+            
+            // Manifesto section
+            gsap.utils.toArray('.manifesto-text .line').forEach((line, i) => {
+                gsap.to(line, {
+                    scrollTrigger: {
+                        trigger: line,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    delay: i * 0.15,
+                    ease: 'power3.out'
+                });
+            });
+            
+            // Gallery items
+            gsap.utils.toArray('.gallery-item').forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 0,
+                    y: 60,
+                    duration: 1,
+                    delay: i * 0.1,
+                    ease: 'power3.out'
+                });
+            });
+            
+            // Feature cards
+            gsap.utils.toArray('.feature-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    opacity: 0,
+                    x: 60,
+                    duration: 1,
+                    delay: i * 0.15,
+                    ease: 'power3.out'
+                });
+            });
+            
+            // CTA section
+            gsap.from('.cta-title', {
+                scrollTrigger: {
+                    trigger: '.cta-section',
+                    start: 'top 70%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                y: 80,
+                duration: 1.2,
+                ease: 'power3.out'
+            });
+            
+            gsap.from('.cta-subtitle', {
+                scrollTrigger: {
+                    trigger: '.cta-section',
+                    start: 'top 70%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                delay: 0.2,
+                ease: 'power3.out'
+            });
+            
+            // Parallax effects
+            gsap.to('.hero-video-bg', {
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                },
+                y: 200,
+                ease: 'none'
+            });
+            
+            // Navigation show/hide on scroll
+            let lastScroll = 0;
+            const nav = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    nav.classList.add('visible');
+                } else {
+                    nav.classList.remove('visible');
+                }
+                
+                lastScroll = currentScroll;
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
