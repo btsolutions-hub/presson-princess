@@ -3,459 +3,664 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Press-on Princess | Luxury Hand-Painted Press-On Nails</title>
-    <meta name="description" content="Premium hand-painted press-on nails. Custom designs delivered to your door. Shop luxury nail art for every occasion.">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>PRESS-ON PRINCESS | Luxury Streetwear Nails</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
-            --pink-primary: #ff6b9d;
-            --pink-dark: #c44569;
-            --pink-light: #ffeef8;
-            --gold: #d4af37;
-            --gold-light: #f4e4ba;
-            --text-dark: #2d2d2d;
-            --text-light: #666;
-            --white: #ffffff;
+            --black: #050505; --black-light: #0a0a0a; --gold: #c9a961;
+            --gold-bright: #e8d5a3; --burgundy: #5c1a1a; --gray: #666;
         }
-        
+        html { scroll-behavior: smooth; }
         body { 
-            font-family: 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, #ffeef8 0%, #fff5f8 50%, #ffebf3 100%);
-            color: var(--text-dark);
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 9998;
         }
         
-        /* Header */
-        header { 
-            background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%);
-            color: var(--white);
-            padding: 2rem 1rem;
-            text-align: center;
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--black);
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-text {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .loader-line {
+            width: 200px;
+            height: 1px;
+            background: #111;
+            margin-top: 2rem;
             position: relative;
             overflow: hidden;
         }
-        
-        header::before {
-            content: '✨';
+        .loader-line::after {
+            content: '';
             position: absolute;
-            top: 10%;
-            left: 5%;
-            font-size: 2rem;
-            opacity: 0.3;
-            animation: sparkle 3s ease-in-out infinite;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            animation: loaderProgress 2s ease forwards;
         }
+        @keyframes loaderProgress { from { transform: translateX(-100%); } to { transform: translateX(0); } }
         
-        header::after {
-            content: '👑';
-            position: absolute;
-            top: 15%;
-            right: 8%;
-            font-size: 3rem;
-            opacity: 0.2;
-            animation: float 4s ease-in-out infinite;
-        }
-        
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.2); }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        header h1 { 
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem; 
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            letter-spacing: 1px;
-        }
-        
-        header .tagline { 
-            font-size: 1.2rem; 
-            opacity: 0.95;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-        
-        /* Demo Banner */
-        .demo-banner {
-            background: linear-gradient(90deg, var(--gold-light) 0%, #fff9e6 50%, var(--gold-light) 100%);
-            border-bottom: 2px solid var(--gold);
-            color: #8b6914;
-            padding: 1rem;
-            text-align: center;
-            font-weight: 500;
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: all 0.4s ease;
         }
-        
-        .demo-banner span {
+        nav.visible { transform: translateY(0); }
+        nav.scrolled {
+            background: rgba(5,5,5,0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+        }
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
             font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
-        /* Container */
-        .container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 2rem 1.5rem; 
+        .logo span {
+            display: block;
+            font-size: 0.45rem;
+            letter-spacing: 0.5em;
+            -webkit-text-fill-color: var(--gray);
+            margin-top: -3px;
         }
-        
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 3rem 0;
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            transition: color 0.3s;
         }
-        
-        .hero h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--pink-dark);
-            margin-bottom: 1rem;
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
-        }
-        
-        .hero-features {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        
-        .feature {
+        .nav-links a:hover { color: var(--gold); }
+        .cart-icon { font-size: 1.1rem; cursor: pointer; position: relative; }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--burgundy);
+            color: #fff;
+            font-size: 0.6rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--pink-dark);
-            font-weight: 500;
+            justify-content: center;
         }
         
-        /* Products Section */
-        .products-section {
-            margin: 4rem 0;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: var(--pink-dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .section-header p {
-            color: var(--text-light);
-        }
-        
-        .products-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 2.5rem; 
-        }
-        
-        .product { 
-            background: var(--white); 
-            border-radius: 20px; 
-            overflow: hidden; 
-            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.15);
-            transition: all 0.3s ease;
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
+            background: radial-gradient(ellipse at 20% 50%, rgba(92,26,26,0.2), transparent 50%),
+                        radial-gradient(ellipse at 80% 50%, rgba(201,169,97,0.1), transparent 50%),
+                        var(--black);
+            overflow: hidden;
+        }
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            padding: 2rem;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 0.6rem 2rem;
+            border: 1px solid var(--gold);
+            font-size: 0.6rem;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 3rem;
+            background: rgba(201,169,97,0.05);
+        }
+        .hero h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3.5rem, 12vw, 10rem);
+            letter-spacing: -0.03em;
+            line-height: 0.85;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            background: linear-gradient(180deg, #fff, #f5f0e8, var(--gold-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 span {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.45em;
+            letter-spacing: 0.4em;
+            text-transform: lowercase;
+            -webkit-text-fill-color: var(--gold);
+            margin-top: 1.5rem;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto 4rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+        .hero-cta { display: inline-flex; gap: 2rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            padding: 1.3rem 3.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+            color: var(--black);
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(201,169,97,0.4);
+        }
+        .btn-secondary {
+            padding: 1.3rem 3.5rem;
+            background: transparent;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            background: var(--gold);
+            color: var(--black);
         }
         
-        .product:hover { 
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(255, 107, 157, 0.25);
+        .marquee {
+            background: var(--black-light);
+            padding: 1.2rem 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(201,169,97,0.1);
+            border-bottom: 1px solid rgba(201,169,97,0.1);
+        }
+        .marquee-content {
+            display: flex;
+            animation: marquee 25s linear infinite;
+            white-space: nowrap;
+        }
+        .marquee-item {
+            padding: 0 4rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gray);
+        }
+        .marquee-item::after { content: ' ✦ '; color: var(--gold); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        .section-header { text-align: center; padding: 8rem 2rem 5rem; }
+        .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            text-transform: uppercase;
         }
         
+        .products { padding: 0 3rem 8rem; max-width: 1600px; margin: 0 auto; }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        .product-card {
+            background: var(--black-light);
+            border: 1px solid rgba(201,169,97,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s;
+        }
+        .product-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .product-image-wrapper {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #111, var(--black-light));
+        }
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s;
+        }
+        .product-card:hover .product-image { transform: scale(1.1); }
         .product-badge {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--gold);
-            color: var(--white);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            top: 1.5rem;
+            left: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--burgundy);
+            color: #fff;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 2;
+            font-weight: 600;
         }
-        
-        .product-image { 
-            width: 100%; 
-            height: 320px; 
-            object-fit: cover;
-            background: linear-gradient(135deg, #f8f8f8 0%, #ffeef8 100%);
+        .product-quick-add {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(5,5,5,0.95), transparent);
+            color: #fff;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transform: translateY(100%);
+            transition: transform 0.5s;
         }
-        
-        .product-info { 
-            padding: 1.8rem; 
-        }
-        
-        .product h3 { 
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem; 
-            margin-bottom: 0.5rem; 
-            color: var(--pink-dark); 
-        }
-        
-        .product-description {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-        
+        .product-card:hover .product-quick-add { transform: translateY(0); }
+        .product-info { padding: 2rem; }
+        .product-name { font-size: 1.2rem; font-weight: 500; margin-bottom: 0.75rem; }
+        .product-description { font-size: 0.9rem; color: var(--gray); margin-bottom: 1.5rem; }
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(201,169,97,0.1);
         }
-        
-        .product .price { 
-            font-size: 1.6rem; 
-            font-weight: 700; 
-            color: var(--pink-primary); 
-        }
-        
-        .buy-btn { 
-            padding: 0.8rem 1.5rem; 
-            background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%); 
-            color: var(--white); 
-            border: none; 
-            border-radius: 25px; 
-            font-size: 0.95rem; 
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--gold);
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
         }
         
-        .buy-btn:hover { 
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
-        }
-        
-        /* Empty State */
-        .empty-state {
+        .empty-collection {
             grid-column: 1/-1;
             text-align: center;
-            padding: 4rem 2rem;
-            background: var(--white);
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 8rem 2rem;
+            border: 1px dashed rgba(201,169,97,0.2);
         }
-        
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-        
-        .empty-state h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--pink-dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .empty-state p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-        
-        /* Contact Section */
-        .contact-section {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 4rem 0;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        }
-        
-        .contact-section h2 {
-            font-family: 'Playfair Display', serif;
+        .empty-collection-icon { font-size: 5rem; margin-bottom: 2rem; opacity: 0.3; }
+        .empty-collection h3 {
+            font-family: 'Archivo Black', sans-serif;
             font-size: 2rem;
-            color: var(--pink-dark);
-            margin-bottom: 1rem;
-        }
-        
-        .contact-section p {
-            color: var(--text-light);
+            text-transform: uppercase;
             margin-bottom: 1.5rem;
         }
+        .empty-collection p { color: var(--gray); max-width: 450px; margin: 0 auto 2.5rem; }
         
-        .telegram-link {
-            display: inline-flex;
+        .features {
+            background: var(--black-light);
+            padding: 8rem 3rem;
+            border-top: 1px solid rgba(201,169,97,0.1);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .feature { text-align: center; }
+        .feature-icon { font-size: 3rem; margin-bottom: 2rem; }
+        .feature h4 {
+            font-size: 0.85rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .feature p { font-size: 0.95rem; color: var(--gray); }
+        
+        .about {
+            padding: 10rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            max-width: 1400px;
+            margin: 0 auto;
             align-items: center;
-            gap: 0.5rem;
-            background: #0088cc;
-            color: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+        }
+        .about-content { padding-right: 2rem; }
+        .about-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        .about h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-transform: uppercase;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+        }
+        .about p { color: var(--gray); font-size: 1.1rem; line-height: 2; margin-bottom: 2rem; }
+        .about-image {
+            position: relative;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, #111, var(--black-light));
+            overflow: hidden;
+        }
+        .about-image::before {
+            content: '';
+            position: absolute;
+            inset: 1.5rem;
+            border: 1px solid rgba(201,169,97,0.3);
+            pointer-events: none;
+            z-index: 2;
         }
         
-        .telegram-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
+        footer {
+            background: var(--black-light);
+            border-top: 1px solid rgba(201,169,97,0.1);
+            padding: 6rem 3rem 3rem;
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+        .footer-brand .logo { margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .footer-brand p { color: var(--gray); font-size: 1rem; line-height: 1.8; max-width: 300px; }
+        .footer-column h5 {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 1rem; }
+        .footer-column a { color: var(--gray); text-decoration: none; font-size: 0.95rem; transition: all 0.3s; display: inline-block; }
+        .footer-column a:hover { color: var(--gold); transform: translateX(5px); }
+        .footer-bottom {
+            border-top: 1px solid rgba(201,169,97,0.1);
+            padding-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .footer-social { display: flex; gap: 2rem; }
+        .footer-social a { color: var(--gray); text-decoration: none; font-size: 1.3rem; transition: all 0.3s; }
+        .footer-social a:hover { color: var(--gold); transform: translateY(-3px); }
+        
+        .demo-banner {
+            background: linear-gradient(90deg, var(--burgundy), #722f37);
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1001;
         }
         
-        /* Footer */
-        footer { 
-            background: linear-gradient(135deg, var(--pink-dark) 0%, #8b3a4a 100%);
-            color: var(--white); 
-            text-align: center; 
-            padding: 3rem 2rem;
-            margin-top: 4rem;
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .about { grid-template-columns: 1fr; gap: 4rem; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
         }
-        
-        footer p {
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-        
-        footer .heart {
-            color: #ff6b6b;
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            .hero h2 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-cta { flex-direction: column; }
             .products-grid { grid-template-columns: 1fr; }
-            .hero-features { flex-direction: column; gap: 1rem; }
-            .contact-section { padding: 2rem 1.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>👑 Press-on Princess</h1>
-        <p class="tagline">Luxury Hand-Painted Press-On Nails</p>
-    </header>
-    
-    <div class="demo-banner">
-        <span>🛍️</span>
-        <strong>Demo Mode:</strong> Store is in demo mode. No real payments will be processed.
+    <div class="loader" id="loader">
+        <div class="loader-text">PRESS-ON PRINCESS</div>
+        <div class="loader-line"></div>
     </div>
-    
-    <main class="container">
-        <section class="hero">
-            <h2>Elevate Your Nail Game</h2>
-            <p>Custom-designed, hand-painted press-on nails delivered to your door. Each set is crafted with precision and care for a salon-quality look that lasts.</p>
-            <div class="hero-features">
-                <div class="feature">✨ Hand-painted designs</div>
-                <div class="feature">🚚 Free shipping over $50</div>
-                <div class="feature">💅 Reusable up to 3 weeks</div>
-                <div class="feature">🎨 Custom orders welcome</div>
+
+    <nav id="navbar">
+        <div class="logo">PRESS-ON<span>PRINCESS</span></div>
+        <ul class="nav-links">
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="cart-icon">🛒<span class="cart-count">0</span></div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Limited Edition Drop</div>
+            <h1>PRESS-ON<span>princess</span></h1>
+            <p class="hero-subtitle">Streetwear luxury for the bold. Hand-crafted press-on nails designed for those who don't follow trends—they set them.</p>
+            <div class="hero-cta">
+                <a href="#collection" class="btn-primary">Shop Collection</a>
+                <a href="#about" class="btn-secondary">Our Story</a>
             </div>
-        </section>
-        
-        <section class="products-section">
-            <div class="section-header">
-                <h2>Our Collection</h2>
-                <p>Discover our latest hand-crafted designs</p>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span class="marquee-item">Free Shipping Over $100</span>
+            <span class="marquee-item">Hand-Crafted in USA</span>
+            <span class="marquee-item">Limited Edition Drops</span>
+            <span class="marquee-item">Sustainable Materials</span>
+            <span class="marquee-item">Free Shipping Over $100</span>
+            <span class="marquee-item">Hand-Crafted in USA</span>
+            <span class="marquee-item">Limited Edition Drops</span>
+            <span class="marquee-item">Sustainable Materials</span>
+        </div>
+    </div>
+
+    <section id="collection" class="products">
+        <div class="section-header">
+            <div class="section-label">The Collection</div>
+            <h2 class="section-title">Drop 001</h2>
+        </div>
+        <div class="products-grid" id="products">
+            <div class="empty-collection">
+                <div class="empty-collection-icon">👑</div>
+                <h3>Drop Loading</h3>
+                <p>New collection coming soon. Follow us on Telegram for exclusive early access.</p>
+                <a href="https://t.me/PressonPrincessBot" class="btn-secondary">Get Notified</a>
             </div>
-            
-            <div id="products" class="products-grid">
-                <!-- Products injected here -->
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">✨</div>
+                <h4>Hand-Painted</h4>
+                <p>Each set crafted by skilled nail artists</p>
             </div>
-        </section>
-        
-        <section class="contact-section">
-            <h2>📱 Shop via Telegram</h2>
-            <p>Get exclusive drops, custom orders, and personal service through our Telegram bot.</p>
-            <a href="https://t.me/PressonPrincessBot" class="telegram-link" target="_blank">
-                <span>💬</span> Chat with us on Telegram
-            </a>
-        </section>
-    </main>
-    
-    <footer>
-        <p>© 2026 Press-on Princess. All rights reserved.</p>
-        <p>Made with <span class="heart">♥</span> for nail lovers everywhere</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">Managed by ☁️ Cloudy AI</p>
+            <div class="feature">
+                <div class="feature-icon">🔄</div>
+                <h4>Reusable</h4>
+                <p>Wear up to 3 weeks, reuse multiple times</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌿</div>
+                <h4>Vegan</h4>
+                <p>Cruelty-free, eco-conscious materials</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📦</div>
+                <h4>Fast Shipping</h4>
+                <p>Worldwide delivery in 3-5 days</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-label">Our Story</div>
+            <h2>Not Your Average Nail Brand</h2>
+            <p>Press-on Princess was born from the streets. We saw a gap between luxury nail art and streetwear culture—so we bridged it.</p>
+            <p>Each drop is limited. Each set is hand-painted. Once they're gone, they're gone. This isn't mass production—this is wearable art.</p>
+            <a href="#collection" class="btn-primary">Shop The Drop</a>
+        </div>
+        <div class="about-image"></div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">PRESS-ON<span>PRINCESS</span></div>
+                <p>Streetwear luxury press-on nails. Hand-crafted for the bold.</p>
+            </div>
+            <div class="footer-column">
+                <h5>Shop</h5>
+                <ul>
+                    <li><a href="#">All Products</a></li>
+                    <li><a href="#">New Drops</a></li>
+                    <li><a href="#">Best Sellers</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>Help</h5>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>Connect</h5>
+                <ul>
+                    <li><a href="https://t.me/PressonPrincessBot">Telegram</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Press-on Princess. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#">📱</a>
+                <a href="#">📷</a>
+                <a href="#">🎵</a>
+            </div>
+        </div>
     </footer>
-    
+
+    <div class="demo-banner">🛍️ Demo Mode — No Real Payments Will Be Processed</div>
+
     <script>
-        // Product catalog - populated by the agent
-        let products = [];
+        gsap.registerPlugin(ScrollTrigger);
         
-        // Load products from catalog
-        async function loadProducts() {
-            try {
-                const response = await fetch('products/catalog.json');
-                products = await response.json();
-            } catch (e) {
-                products = [];
-            }
-            renderProducts();
-        }
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('navbar').classList.add('visible');
+                initAnimations();
+            }, 2200);
+        });
         
-        function renderProducts() {
-            const container = document.getElementById('products');
+        function initAnimations() {
+            const tl = gsap.timeline();
             
-            if (products.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">👑</div>
-                        <h3>New Collection Coming Soon</h3>
-                        <p>We're curating beautiful new designs. Check back shortly!</p>
-                    </div>
-                `;
-                return;
-            }
+            tl.to('.hero-badge', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+              .to('.hero h1', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.7')
+              .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.8')
+              .to('.hero-cta', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.7');
             
-            container.innerHTML = products.map(p => `
-                <div class="product">
-                    ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
-                    <img src="${p.image}" alt="${p.name}" class="product-image" 
-                         onerror="this.src='https://via.placeholder.com/300x320/ff6b9d/ffffff?text=Press-on+Princess'">
-                    <div class="product-info">
-                        <h3>${p.name}</h3>
-                        <p class="product-description">${p.description || 'Hand-painted press-on nail set'}</p>
-                        <div class="product-footer">
-                            <span class="price">$${p.price}</span>
-                            <button class="buy-btn" onclick="addToCart('${p.id}')">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            gsap.utils.toArray('.section-label, .section-title').forEach(el => {
+                gsap.to(el, {
+                    scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none reverse' },
+                    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out'
+                });
+            });
+            
+            gsap.to('.empty-collection', {
+                scrollTrigger: { trigger: '.empty-collection', start: 'top 80%' },
+                opacity: 1, y: 0, duration: 1, ease: 'power3.out'
+            });
+            
+            gsap.utils.toArray('.feature').forEach((el, i) => {
+                gsap.to(el, {
+                    scrollTrigger: { trigger: el, start: 'top 85%' },
+                    opacity: 1, y: 0, duration: 0.8, delay: i * 0.1, ease: 'power3.out'
+                });
+            });
+            
+            ScrollTrigger.create({
+                start: 'top -100',
+                onUpdate: (self) => {
+                    const nav = document.getElementById('navbar');
+                    if (self.scroll() > 100) nav.classList.add('scrolled');
+                    else nav.classList.remove('scrolled');
+                }
+            });
         }
-        
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                alert(`🛒 Demo Mode: "${product.name}" would be added to cart.\\n\\nIn production, this would open Stripe checkout for $${product.price}`);
-            }
-        }
-        
-        // Initial render
-        loadProducts();
     </script>
 </body>
 </html>
