@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press-on Princess | Luxury Hand-Painted Press-On Nails</title>
+    <meta name="description" content="Premium hand-painted press-on nails. Custom designs delivered to your door. Shop luxury nail art for every occasion.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --pink-primary: #ff6b9d;
+            --pink-dark: #c44569;
+            --pink-light: #ffeef8;
+            --gold: #d4af37;
+            --gold-light: #f4e4ba;
+            --text-dark: #2d2d2d;
+            --text-light: #666;
+            --white: #ffffff;
+        }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f8 50%, #ffebf3 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header { 
+            background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '✨';
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+        
+        header::after {
+            content: '👑';
+            position: absolute;
+            top: 15%;
+            right: 8%;
+            font-size: 3rem;
+            opacity: 0.2;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        header h1 { 
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem; 
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+        
+        header .tagline { 
+            font-size: 1.2rem; 
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        /* Demo Banner */
+        .demo-banner {
+            background: linear-gradient(90deg, var(--gold-light) 0%, #fff9e6 50%, var(--gold-light) 100%);
+            border-bottom: 2px solid var(--gold);
+            color: #8b6914;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .demo-banner span {
+            font-size: 1.2rem;
+        }
+        
+        /* Container */
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 2rem 1.5rem; 
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--pink-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--pink-dark);
+            font-weight: 500;
+        }
+        
+        /* Products Section */
+        .products-section {
+            margin: 4rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--pink-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-header p {
+            color: var(--text-light);
+        }
+        
+        .products-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 2.5rem; 
+        }
+        
+        .product { 
+            background: var(--white); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .product:hover { 
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(255, 107, 157, 0.25);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--gold);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+        
+        .product-image { 
+            width: 100%; 
+            height: 320px; 
+            object-fit: cover;
+            background: linear-gradient(135deg, #f8f8f8 0%, #ffeef8 100%);
+        }
+        
+        .product-info { 
+            padding: 1.8rem; 
+        }
+        
+        .product h3 { 
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem; 
+            margin-bottom: 0.5rem; 
+            color: var(--pink-dark); 
+        }
+        
+        .product-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product .price { 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            color: var(--pink-primary); 
+        }
+        
+        .buy-btn { 
+            padding: 0.8rem 1.5rem; 
+            background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%); 
+            color: var(--white); 
+            border: none; 
+            border-radius: 25px; 
+            font-size: 0.95rem; 
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+        
+        .buy-btn:hover { 
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--pink-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .empty-state p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        
+        .contact-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--pink-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-section p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #0088cc;
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .telegram-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
+        }
+        
+        /* Footer */
+        footer { 
+            background: linear-gradient(135deg, var(--pink-dark) 0%, #8b3a4a 100%);
+            color: var(--white); 
+            text-align: center; 
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+        
+        footer p {
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer .heart {
+            color: #ff6b6b;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .hero h2 { font-size: 1.8rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .hero-features { flex-direction: column; gap: 1rem; }
+            .contact-section { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>👑 Press-on Princess</h1>
+        <p class="tagline">Luxury Hand-Painted Press-On Nails</p>
+    </header>
+    
+    <div class="demo-banner">
+        <span>🛍️</span>
+        <strong>Demo Mode:</strong> Store is in demo mode. No real payments will be processed.
+    </div>
+    
+    <main class="container">
+        <section class="hero">
+            <h2>Elevate Your Nail Game</h2>
+            <p>Custom-designed, hand-painted press-on nails delivered to your door. Each set is crafted with precision and care for a salon-quality look that lasts.</p>
+            <div class="hero-features">
+                <div class="feature">✨ Hand-painted designs</div>
+                <div class="feature">🚚 Free shipping over $50</div>
+                <div class="feature">💅 Reusable up to 3 weeks</div>
+                <div class="feature">🎨 Custom orders welcome</div>
+            </div>
+        </section>
+        
+        <section class="products-section">
+            <div class="section-header">
+                <h2>Our Collection</h2>
+                <p>Discover our latest hand-crafted designs</p>
+            </div>
+            
+            <div id="products" class="products-grid">
+                <!-- Products injected here -->
+            </div>
+        </section>
+        
+        <section class="contact-section">
+            <h2>📱 Shop via Telegram</h2>
+            <p>Get exclusive drops, custom orders, and personal service through our Telegram bot.</p>
+            <a href="https://t.me/PressonPrincessBot" class="telegram-link" target="_blank">
+                <span>💬</span> Chat with us on Telegram
+            </a>
+        </section>
+    </main>
+    
+    <footer>
+        <p>© 2026 Press-on Princess. All rights reserved.</p>
+        <p>Made with <span class="heart">♥</span> for nail lovers everywhere</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">Managed by ☁️ Cloudy AI</p>
+    </footer>
+    
+    <script>
+        // Product catalog - populated by the agent
+        let products = [];
+        
+        // Load products from catalog
+        async function loadProducts() {
+            try {
+                const response = await fetch('products/catalog.json');
+                products = await response.json();
+            } catch (e) {
+                products = [];
+            }
+            renderProducts();
+        }
+        
+        function renderProducts() {
+            const container = document.getElementById('products');
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👑</div>
+                        <h3>New Collection Coming Soon</h3>
+                        <p>We're curating beautiful new designs. Check back shortly!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = products.map(p => `
+                <div class="product">
+                    ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+                    <img src="${p.image}" alt="${p.name}" class="product-image" 
+                         onerror="this.src='https://via.placeholder.com/300x320/ff6b9d/ffffff?text=Press-on+Princess'">
+                    <div class="product-info">
+                        <h3>${p.name}</h3>
+                        <p class="product-description">${p.description || 'Hand-painted press-on nail set'}</p>
+                        <div class="product-footer">
+                            <span class="price">$${p.price}</span>
+                            <button class="buy-btn" onclick="addToCart('${p.id}')">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                alert(`🛒 Demo Mode: "${product.name}" would be added to cart.\\n\\nIn production, this would open Stripe checkout for $${product.price}`);
+            }
+        }
+        
+        // Initial render
+        loadProducts();
+    </script>
+</body>
+</html>
